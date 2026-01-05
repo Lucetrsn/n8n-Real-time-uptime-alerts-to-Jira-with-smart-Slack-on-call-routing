@@ -1,11 +1,5 @@
 # **Webhook → Jira Incident → Slack On-Call Rotation (Uptime Alert Automation Workflow)**
 
----
-
-## **1.1 Title**
-### **Real-Time Uptime Alerts to Jira with Smart Slack On-Call Routing**
-
----
 
 ## **1.2 Summary (TL;DR)**
 This workflow automatically converts uptime monitoring alerts received via webhook into Jira incident tasks and intelligently notifies an available on-call team member on Slack based on their real-time presence status. It ensures critical service outages never go unnoticed by selecting an active responder and sending a detailed direct message immediately.
